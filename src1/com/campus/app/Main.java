@@ -1,4 +1,5 @@
 package com.campus.app;
+import com.campus.model.ScholarshipStudent;
 import com.campus.model.Student;
 import com.campus.service.StudentService;
 import java.util.Scanner;
@@ -32,18 +33,21 @@ public class Main {
             System.out.print("Enter mark for subject " + (i + 1) + ": ");
             marks[i] = sc.nextInt();
         }
+        System.out.print("Enter the scholarship percentage: ");
+        double scholarshipPercentage = sc.nextDouble();
 
-        Student student = new Student(
+        Student student = new ScholarshipStudent(
                 studentid,
                 studentname,
                 age,
                 department,
-                marks
+                marks,
+                scholarshipPercentage
         );
 
         student.displayStudentInfo(true);
 
-        student.displayStudentCount();
+        Student.displayStudentCount();
 
         StudentService studentService = new StudentService();
 

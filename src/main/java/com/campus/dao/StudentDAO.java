@@ -1,5 +1,6 @@
 package com.campus.dao;
 
+import com.campus.model.Departments;
 import com.campus.model.Student;
 import com.campus.util.DBConnection;
 import java.util.List;
@@ -8,58 +9,74 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.ResultSet;
+
+/**
+ * JDBC StudentDAO implementation.
+ */
 public class StudentDAO {
-    //add student using prepared statements
-    public void addStudent(Student student){
-        String sql = "INSERT INTO student (name, department, age) VALUES (?, ?, ?)";
+
+    public void addStudent(Student student) {
+        String sql = "INSERT INTO students (name, department_id, age) VALUES (?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, student.getName());
-            pstmt.setString(2, student.getDepartment());
+            if (student.getDepartment() != null) {
+                pstmt.setInt(2, student.getDepartment().getId());
+            } else {
+                pstmt.setNull(2, java.sql.Types.INTEGER);
+            }
             pstmt.setInt(3, student.getAge());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    //get all students using prepared statements
-    public List<Student> getAllStudents(){
+
+    public List<Student> getAllStudents() {
         List<Student> students = new ArrayList<>();
-        String sql = "SELECT * FROM student";
+        String sql = "SELECT * FROM students";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                students.add(new Student(rs.getInt("id"), rs.getString("name"), rs.getString("department"), rs.getInt("age")));
+                Departments dept = new Departments();
+                dept.setId(rs.getInt("department_id"));
+                students.add(new Student(rs.getInt("id"), rs.getString("name"), rs.getInt("age"), dept));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return students;
     }
-    //get student by id
-    public Student getStudentById(int id){
+
+    public Student getStudentById(int id) {
         Student student = null;
-        String sql = "SELECT * FROM student WHERE id = ?";
+        String sql = "SELECT * FROM students WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                student = new Student(rs.getInt("id"), rs.getString("name"), rs.getString("department"), rs.getInt("age"));
+                Departments dept = new Departments();
+                dept.setId(rs.getInt("department_id"));
+                student = new Student(rs.getInt("id"), rs.getString("name"), rs.getInt("age"), dept);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return student;
     }
-    //update student
-    public void updateStudent(Student student){
-        String sql = "UPDATE student SET name = ?, department = ?, age = ? WHERE id = ?";
+
+    public void updateStudent(Student student) {
+        String sql = "UPDATE students SET name = ?, department_id = ?, age = ? WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, student.getName());
-            pstmt.setString(2, student.getDepartment());
+            if (student.getDepartment() != null) {
+                pstmt.setInt(2, student.getDepartment().getId());
+            } else {
+                pstmt.setNull(2, java.sql.Types.INTEGER);
+            }
             pstmt.setInt(3, student.getAge());
             pstmt.setInt(4, student.getId());
             pstmt.executeUpdate();
@@ -67,9 +84,9 @@ public class StudentDAO {
             e.printStackTrace();
         }
     }
-    //delete student
-    public void deleteStudent(int id){
-        String sql = "DELETE FROM student WHERE id = ?";
+
+    public void deleteStudent(int id) {
+        String sql = "DELETE FROM students WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, id);
@@ -78,5 +95,4 @@ public class StudentDAO {
             e.printStackTrace();
         }
     }
-
 }

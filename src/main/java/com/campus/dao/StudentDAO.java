@@ -1,6 +1,6 @@
 package com.campus.dao;
 
-import com.campus.model.Departments;
+import com.campus.model.Department;
 import com.campus.model.Student;
 import com.campus.util.DBConnection;
 import java.util.List;
@@ -39,7 +39,7 @@ public class StudentDAO {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                Departments dept = new Departments();
+                Department dept = new Department();
                 dept.setId(rs.getInt("department_id"));
                 students.add(new Student(rs.getInt("id"), rs.getString("name"), rs.getInt("age"), dept));
             }
@@ -57,7 +57,7 @@ public class StudentDAO {
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                Departments dept = new Departments();
+                Department dept = new Department();
                 dept.setId(rs.getInt("department_id"));
                 student = new Student(rs.getInt("id"), rs.getString("name"), rs.getInt("age"), dept);
             }

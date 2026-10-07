@@ -1,8 +1,8 @@
-/home/student/Documents/Preethi_repository/campus_management_system/src/main/java/com/campus/model/Departments.java
 /home/student/Documents/Preethi_repository/campus_management_system/src/main/java/com/campus/util/DBConnection.java
 /home/student/Documents/Preethi_repository/campus_management_system/src/main/java/com/campus/util/JPAUtil.java
 /home/student/Documents/Preethi_repository/campus_management_system/src/main/java/com/campus/dao/DepartmentJPADAO.java
 /home/student/Documents/Preethi_repository/campus_management_system/src/main/java/com/campus/filter/LoggingFilter.java
+/home/student/Documents/Preethi_repository/campus_management_system/src/main/java/com/campus/model/Department.java
 /home/student/Documents/Preethi_repository/campus_management_system/src/main/java/com/campus/services/StudentService.java
 /home/student/Documents/Preethi_repository/campus_management_system/src/main/java/com/campus/controller/StudentServlet.java
 /home/student/Documents/Preethi_repository/campus_management_system/src/main/java/com/campus/dao/StudentDAO.java

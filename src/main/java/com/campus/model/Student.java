@@ -17,18 +17,18 @@ public class Student {
 
     @ManyToOne
     @JoinColumn(name = "department_id")
-    private Departments department;
+    private Department department;
 
     public Student() {
     }
 
-    public Student(String name, int age, Departments department) {
+    public Student(String name, int age, Department department) {
         this.name = name;
         this.age = age;
         this.department = department;
     }
 
-    public Student(int id, String name, int age, Departments department) {
+    public Student(int id, String name, int age, Department department) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -59,11 +59,11 @@ public class Student {
         this.age = age;
     }
 
-    public Departments getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(Departments department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 

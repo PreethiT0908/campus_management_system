@@ -1,6 +1,6 @@
 package com.campus.dao;
 
-import com.campus.model.Departments;
+import com.campus.model.Department;
 import com.campus.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -9,28 +9,28 @@ import java.util.List;
 
 public class DepartmentJPADAO {
 
-    public List<Departments> getAllDepartments() {
+    public List<Department> getAllDepartments() {
         EntityManager em = JPAUtil.getEntityManager();
         try {
-            return em.createQuery("SELECT d FROM Department d ORDER BY d.id", Departments.class).getResultList();
+            return em.createQuery("SELECT d FROM Department d ORDER BY d.id", Department.class).getResultList();
         } finally {
             em.close();
         }
     }
 
-    public Departments getDepartmentById(int id) {
+    public Department getDepartmentById(int id) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
-            return em.find(Departments.class, id);
+            return em.find(Department.class, id);
         } finally {
             em.close();
         }
     }
 
-    public Departments getDepartmentByName(String name) {
+    public Department getDepartmentByName(String name) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
-            List<Departments> list = em.createQuery("SELECT d FROM Department d WHERE LOWER(d.name) = LOWER(:name)", Departments.class)
+            List<Department> list = em.createQuery("SELECT d FROM Department d WHERE LOWER(d.name) = LOWER(:name)", Department.class)
                     .setParameter("name", name != null ? name.trim() : "")
                     .getResultList();
             return list.isEmpty() ? null : list.get(0);
@@ -39,7 +39,7 @@ public class DepartmentJPADAO {
         }
     }
 
-    public void addDepartment(Departments department) {
+    public void addDepartment(Department department) {
         EntityManager em = JPAUtil.getEntityManager();
         EntityTransaction transaction = em.getTransaction();
         try {

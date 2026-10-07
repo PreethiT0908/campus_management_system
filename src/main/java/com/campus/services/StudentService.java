@@ -2,7 +2,7 @@ package com.campus.services;
 
 import com.campus.dao.DepartmentJPADAO;
 import com.campus.dao.StudentJPADAO;
-import com.campus.model.Departments;
+import com.campus.model.Department;
 import com.campus.model.Student;
 
 import java.util.List;
@@ -35,11 +35,11 @@ public class StudentService {
     // Department Methods
     // ==========================================
 
-    public List<Departments> getAllDepartments() {
+    public List<Department> getAllDepartments() {
         return departmentDAO.getAllDepartments();
     }
 
-    public Departments getDepartmentById(int id) {
+    public Department getDepartmentById(int id) {
         return departmentDAO.getDepartmentById(id);
     }
 
@@ -60,18 +60,18 @@ public class StudentService {
     // ==========================================
 
     public void addStudent(String name, String department, int age) {
-        Departments dept = departmentDAO.getDepartmentByName(department);
+        Department dept = departmentDAO.getDepartmentByName(department);
         if (dept == null) {
-            dept = new Departments(department);
+            dept = new Department(department);
             departmentDAO.addDepartment(dept);
         }
         studentDAO.addStudent(new Student(name, age, dept));
     }
 
     public void updateStudent(int id, String name, String department, int age) {
-        Departments dept = departmentDAO.getDepartmentByName(department);
+        Department dept = departmentDAO.getDepartmentByName(department);
         if (dept == null) {
-            dept = new Departments(department);
+            dept = new Department(department);
             departmentDAO.addDepartment(dept);
         }
         studentDAO.updateStudent(new Student(id, name, age, dept));

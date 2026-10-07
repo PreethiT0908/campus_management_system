@@ -1,6 +1,6 @@
 package com.campus.controller;
 
-import com.campus.model.Departments;
+import com.campus.model.Department;
 import com.campus.model.Student;
 import com.campus.services.StudentService;
 import jakarta.servlet.RequestDispatcher;
@@ -40,7 +40,7 @@ public class StudentServlet extends HttpServlet {
         switch (action) {
             case "list": {
                 List<Student> students = studentService.getAllStudents();
-                List<Departments> departments = studentService.getAllDepartments();
+                List<Department> departments = studentService.getAllDepartments();
                 request.setAttribute("students", students);
                 request.setAttribute("departments", departments);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/student.jsp");
@@ -50,7 +50,7 @@ public class StudentServlet extends HttpServlet {
             case "edit": {
                 int id = Integer.parseInt(request.getParameter("id"));
                 Student student = studentService.getStudentById(id);
-                List<Departments> departments = studentService.getAllDepartments();
+                List<Department> departments = studentService.getAllDepartments();
                 request.setAttribute("student", student);
                 request.setAttribute("departments", departments);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/update-student.jsp");
@@ -72,7 +72,7 @@ public class StudentServlet extends HttpServlet {
                 } else {
                     students = studentService.findStudentsByDepartment(department.trim());
                 }
-                List<Departments> departments = studentService.getAllDepartments();
+                List<Department> departments = studentService.getAllDepartments();
                 request.setAttribute("students", students);
                 request.setAttribute("departments", departments);
                 request.setAttribute("selectedDepartment", department);
@@ -107,7 +107,7 @@ public class StudentServlet extends HttpServlet {
 
                 if (departmentIdParam != null && !departmentIdParam.trim().isEmpty()) {
                     int departmentId = Integer.parseInt(departmentIdParam);
-                    Departments department = studentService.getDepartmentById(departmentId);
+                    Department department = studentService.getDepartmentById(departmentId);
                     Student student = new Student(name, age, department);
                     studentService.addStudent(student);
                 } else {
@@ -125,7 +125,7 @@ public class StudentServlet extends HttpServlet {
 
                 if (departmentIdParam != null && !departmentIdParam.trim().isEmpty()) {
                     int departmentId = Integer.parseInt(departmentIdParam);
-                    Departments department = studentService.getDepartmentById(departmentId);
+                    Department department = studentService.getDepartmentById(departmentId);
                     Student student = new Student(id, name, age, department);
                     studentService.updateStudent(student);
                 } else {
@@ -158,7 +158,7 @@ public class StudentServlet extends HttpServlet {
 
         if (departmentIdParam != null && !departmentIdParam.trim().isEmpty()) {
             int departmentId = Integer.parseInt(departmentIdParam);
-            Departments department = studentService.getDepartmentById(departmentId);
+            Department department = studentService.getDepartmentById(departmentId);
             Student student = new Student(id, name, age, department);
             studentService.updateStudent(student);
         } else {
